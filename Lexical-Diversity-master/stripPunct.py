@@ -17,6 +17,7 @@ def stripToOut(filename):
 
     unistring = toss.sub('', unistring)
     #unistring = tossnum.sub('', unistring)
+    
 
     outfile = codecs.open(outputname, 'w', 'utf-8')
     outfile.write(unistring)

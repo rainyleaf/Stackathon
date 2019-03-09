@@ -1,7 +1,7 @@
 import stripPunct
 import os
 print("in cleaner_bulk")
-target_names = ['to-process.txt', 'to_process.txt', '-tp.txt', '_tp.txt']
+#target_names = ['to-process.txt', 'to_process.txt', '-tp.txt', '_tp.txt']
 #target = "-Processing"
 
 for dirname, dirs, files in os.walk('./temp'):
@@ -12,3 +12,5 @@ for dirname, dirs, files in os.walk('./temp'):
         inputfile = "temp/" + filename
         #print(dirname + "/" + filename)
         stripPunct.stripToOut(inputfile)
+
+print("at end of cleaner_bulk")

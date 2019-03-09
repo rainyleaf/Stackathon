@@ -5,14 +5,14 @@
     </head>
     <body>
         <form action="/single" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" multiple=false>
+            <input type="file" name="file" accept=".txt" multiple=false>
             <button>Upload</button>
         </form>
         <p></p>
         <form action="/array" method="post" enctype="multipart/form-data">
-            <input type="file" name="files" multiple=true>
+            <input type="file" name="files" accept=".txt" multiple=true>
             <button>Upload multiple</button>
         </form>
     </body>
-    <script src="../index.js"></script>
+    <script src="../index2.js"></script>
 </html>
