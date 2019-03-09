@@ -1,0 +1,20 @@
+{
+  "name": "stackathon",
+  "version": "0.1.0",
+  "description": "online platform for processing text files and calculating lexical diversity measures thereof",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "Torri Raines",
+  "license": "ISC",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "empty-folder": "^2.0.3",
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "multer": "^1.4.1",
+    "util.promisify": "^1.0.0"
+  }
+}

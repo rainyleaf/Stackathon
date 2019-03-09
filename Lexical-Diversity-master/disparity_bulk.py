@@ -23,14 +23,11 @@ def calculate_disparity():
         semantic_disp = 1
     else:
         semantic_disp = float(sense_tokens/sense_types)
-    print>>outfile, "%s\t%s\t%s\t%.3f" % (book, tokens, types, semantic_disp)
+    print>>outfile, "%s\t%s\t%s\t%.3f" % (text, tokens, types, semantic_disp)
 
 target = 'tagged'
 
-sense_index = open("/Users/Torri/Documents/Grad Stuff/Thesis stuff/Data - Novels/Analysis/senseindex(condensed).txt", 'r').readlines()
-#sense_index = open("/Users/Leaf/Documents/Analysis/senseindex(condensed).txt", 'r').readlines()
-
-data = open("/Users/Torri/Documents/Grad Stuff/Thesis stuff/Data - Novels/Analysis/Christie/tagged/And_Then_There_Were_None_tagged.txt", 'r').readlines() #not real filename, find actual
+sense_index = open("./senseindex(condensed).txt", 'r').readlines()
 
 d = {}
 sense_dict = {}
@@ -39,16 +36,16 @@ types = 0
 semantic_disp = 0
 
 
-pathstump = "/Users/Torri/Documents/Grad stuff/Thesis stuff/Data - Novels/Analysis/"
+pathstump = "../temp"
 
-for dirname, dirs, files in os.walk('.'):
-    if target in dirname:
+for dirname, dirs, files in os.walk('../temp'):
+    #if target in dirname:
         #author = re.findall("..(.*?)\\\\tagged", dirname)[0]
-        author = dirname.split(os.sep)[1]
-        print author
-        output = os.path.join(dirname, '..', author + "_sem_disp.txt")
+        #author = dirname.split(os.sep)[1]
+        #print author
+        output = "../temp/semantic_disparity_output.txt"
         outfile = open(output, 'w')
-        print>>outfile, "Book\tTokens\tTypes\tSemantic Disparity"
+        print>>outfile, "Text\tTokens\tTypes\tSemantic Disparity"
         for filename in files:
             d = {}
             sense_dict = {}
@@ -56,8 +53,8 @@ for dirname, dirs, files in os.walk('.'):
             types = 0
             semantic_disp = 0
             if '_tagged.txt' in filename: 
-                book = filename.replace('_tagged.txt', '')
-                data = open(pathstump + author + "/" + "tagged/" + filename, 'r')
+                text = filename.replace('_tagged.txt', '')
+                data = open(pathstump + filename, 'r')
                 for line in data:
                     for line in data:
                         line = line.rstrip('\r\n')
