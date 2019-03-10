@@ -1,35 +1,35 @@
 import os
 import sys
 import re
-
-def calculate_mattr50():		#moving average type token ratio for 50 words)
-	if tokens < (int(window_size) - 1):				#this won't happen? also don't get it
+#print("in MATTR_bulk")
+def calculate_mattr50():		#moving average type token ratio for 50 words
+	if tokens < (int(window_size) - 1):	
 		types_50 = len(d)		#if token count is less than 49, avg type/token ratio defaults to flat number of types
 	else:							#in a normal case
 		denominator = tokens - (int(window_size) - 1) 	#denominator is going to be the number of windows/number of sets of 50
 		types_50 = types_50_sums / denominator		#divide sum of types per 50 by number of 50s
-	print>>outfile, "%s\t%s\t%s\t%.2f" % (book, tokens, total_types, types_50)
+	print(f"{text}\t{tokens}\t{total_types}\t{types_50}\n")
 
 window_size = sys.argv[1]
-target = 'tagged'
+#target = 'tagged'
 
 d = {}
+t = {}
 l = []
 types_50_sums = float(0)
 types = 0
 tokens = 0
 total_types = 0
 
-pathstump = "/Users/Torri/Documents/Grad stuff/Thesis stuff/Data - Novels/Analysis/"
+pathstump = "./temp/"
 
-for dirname, dirs, files in os.walk('.'):
-    if target in dirname:
+for dirname, dirs, files in os.walk('./temp'):
+    #if target in dirname:
         #author = re.findall("..(.*?)\\\\tagged", dirname)[0]
-        author = dirname.split(os.sep)[1]
+        #author = dirname.split(os.sep)[1]
         #print author
-        output = os.path.join(dirname, '..', author + "_MAT_" + str(window_size) + ".txt")
-        outfile = open(output, 'w')
-        # .\James\tagged\..\James_MAT_50.txt
+        #output = os.path.join(dirname, 'results_MAT_' + str(window_size) + ".txt")
+        #outfile = open(output, 'w')
         for filename in files:
             d = {}
             l = []
@@ -38,8 +38,10 @@ for dirname, dirs, files in os.walk('.'):
             total_types = 0
             tokens = 0
             if '_tagged.txt' in filename: 
-                book = filename.replace('_tagged.txt', '')
-                data = open(pathstump + author + "/" + "tagged/" + filename, 'r')
+                text = filename.replace('_tagged.txt', '')
+                data = open(pathstump + filename, 'r')
+                #print("passed the _tagged.txt check in MATTR: ")
+                print(filename)
                 for line in data:
                     line = line.rstrip('\n')
                     line = line.split('\t')
@@ -50,6 +52,10 @@ for dirname, dirs, files in os.walk('.'):
                         d[lemma] += 1			#add lemma to dictionary or increase value
                     else:
                         d[lemma] = 1
+                    if lemma in t:
+                        t[lemma] += 1			#add lemma to dictionary or increase value
+                    else:
+                        t[lemma] = 1
                         total_types += 1
                     if tokens >= int(window_size):
                         if tokens > int(window_size):			#not in first 50 words for book

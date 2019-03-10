@@ -25,6 +25,8 @@ app.post('/single', upload.single('file'), (req, res) => {
         execSync('python3 Lexical-Diversity-master/splitter_bulk.py')
         let tagged = execSync('python3 Lexical-Diversity-master/treetag-batch.py')
         fs.writeFileSync(`temp/${fileObj.originalname}_tagged.txt`, tagged)
+        let matt50results = execSync('python3 Lexical-Diversity-master/MATTR_bulk.py 5000')
+        console.log("results: ", matt50results.toString())
         res.send();
     } catch (error) {
         console.error(error)
