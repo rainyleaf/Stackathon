@@ -12,8 +12,10 @@
   "dependencies": {
     "child_process": "^1.0.2",
     "empty-folder": "^2.0.3",
+    "en-stemmer": "^1.0.3",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
+    "lemmatizer": "0.0.1",
     "multer": "^1.4.1",
     "util.promisify": "^1.0.0"
   }

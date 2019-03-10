@@ -23,6 +23,8 @@ app.post('/single', upload.single('file'), (req, res) => {
         tempFilesFromArrayObjs([fileObj])
         execSync('python3 Lexical-Diversity-master/cleaner_bulk.py', {cwd: null})
         execSync('python3 Lexical-Diversity-master/splitter_bulk.py')
+        let tagged = execSync('python3 Lexical-Diversity-master/treetag-batch.py')
+        fs.writeFileSync(`temp/${fileObj.originalname}_tagged.txt`, tagged)
         res.send();
     } catch (error) {
         console.error(error)
