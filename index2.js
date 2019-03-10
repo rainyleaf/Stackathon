@@ -23,10 +23,18 @@ app.post('/single', upload.single('file'), (req, res) => {
         tempFilesFromArrayObjs([fileObj])
         execSync('python3 Lexical-Diversity-master/cleaner_bulk.py', {cwd: null})
         execSync('python3 Lexical-Diversity-master/splitter_bulk.py')
+
         let tagged = execSync('python3 Lexical-Diversity-master/treetag-batch.py')
+        let taggedTexts = [[`${fileObj.originalname}_tagged.txt`, tagged.toString()]]
         fs.writeFileSync(`temp/${fileObj.originalname}_tagged.txt`, tagged)
-        let matt50results = execSync('python3 Lexical-Diversity-master/MATTR_bulk.py 5000')
-        console.log("results: ", matt50results.toString())
+
+
+        //console.log("string that I'm passing to execSync for mattr: ")
+        //[['tbp_tagged.txt', 'stuff\tstuff\tstuff\nbutts\tbutts\tbutts']]
+        let jsonArraystr = JSON.stringify(taggedTexts)
+        //console.log("jsonarraystr: ", jsonArraystr)
+        let mattr50 = execSync(`python3 Lexical-Diversity-master/MATTR_bulk.py 5000 '${jsonArraystr}'`)
+        console.log("results: ", mattr50.toString())
         res.send();
     } catch (error) {
         console.error(error)
