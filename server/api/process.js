@@ -25,7 +25,7 @@ router.post('/single', upload.single('file'), (req, res) => {
 
         //this is where if-statement logic for a diff copy of the tagged file for each analysis script will go
         fs.writeFileSync(`./server/api/temp/${fileObj.originalname}_tagged_MATTR.txt`, tagged)
-        let matt50results = execSync('python3 ./server/api/Lexical-Diversity-master/MATTR_bulk.py 5000')
+        let matt50results = execSync('python3 ./server/api/Lexical-Diversity-master/MATTR_bulk.py 50')
         console.log("results: ", matt50results.toString())
         res.json(matt50results.toString());
     } catch (error) {

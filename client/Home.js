@@ -8,7 +8,8 @@ export default class Home extends Component {
     super(props)
     this.state = {
       results: '',
-      loading: ''
+      loading: '',
+      resultsHeading: ''
     }
     this.handleSubmitSingle = this.handleSubmitSingle.bind(this)
     this.handleSubmitArray = this.handleSubmitArray.bind(this)
@@ -28,7 +29,7 @@ export default class Home extends Component {
         }
       })
       console.log(result.data)
-      this.setState({results: result.data, loading: ''})
+      this.setState({results: result.data, resultsHeading: 'File\tTokens\tTypes\tAverage types per 50 words', loading: ''})
     } catch (error) {
       console.error(error)
     }
@@ -55,6 +56,8 @@ export default class Home extends Component {
     }
   }
   render () {
+    const resultsHeadings = this.state.resultsHeading.split('\t')
+    const results = this.state.results.split('\t')
     return (
       <div id="home">
         <div id="fileInput">
@@ -72,8 +75,22 @@ export default class Home extends Component {
             Your output will appear below when the process is done running.
             <p />
             {this.state.loading}
-            <p />
-            {this.state.results}
+            <table>
+              <tbody>
+                <tr>
+                  <th>{resultsHeadings[0]}</th>
+                  <th>{resultsHeadings[1]}</th>
+                  <th>{resultsHeadings[2]}</th>
+                  <th>{resultsHeadings[3]}</th>
+                </tr>
+                <tr>
+                  <td>{results[0]}</td>
+                  <td>{results[1]}</td>
+                  <td>{results[2]}</td>
+                  <td>{results[3]}</td>
+                </tr>
+              </tbody>
+            </table>
         </div>
         </div>
 
