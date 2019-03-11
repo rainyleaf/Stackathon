@@ -25,7 +25,7 @@
   
   p {
     font-size: 14px;
-    margin: 0;
+    margin: 10px;
     color: #aaa;
   }
   
@@ -65,6 +65,10 @@
   
   form button:hover {
     background-color: #59A9C2;
+  }
+
+  .navlink-container {
+    padding: 20px
   }
   
   /* utility/layout */

@@ -41,8 +41,6 @@ for dirname, dirs, files in os.walk('./server/api/temp'):
             if '_MATTR.txt' in filename: 
                 text = filename.replace('_MATTR.txt', '')
                 data = open(pathstump + filename, 'r')
-                #print("passed the _tagged.txt check in MATTR: ")
-                print(filename)
                 for line in data:
                     line = line.rstrip('\n')
                     line = line.split('\t')

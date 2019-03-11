@@ -22,12 +22,12 @@ router.post('/single', upload.single('file'), (req, res) => {
         execSync('python3 ./server/api/Lexical-Diversity-master/cleaner_bulk.py', {cwd: null})
         execSync('python3 ./server/api/Lexical-Diversity-master/splitter_bulk.py')
         let tagged = execSync('python3 ./server/api/Lexical-Diversity-master/treetag-batch.py')
-        fs.writeFileSync(`./server/api/temp/${fileObj.originalname}_tagged.txt`, tagged)
 
+        //this is where if-statement logic for a diff copy of the tagged file for each analysis script will go
         fs.writeFileSync(`./server/api/temp/${fileObj.originalname}_tagged_MATTR.txt`, tagged)
         let matt50results = execSync('python3 ./server/api/Lexical-Diversity-master/MATTR_bulk.py 5000')
         console.log("results: ", matt50results.toString())
-        res.send();
+        res.json(matt50results.toString());
     } catch (error) {
         console.error(error)
     }
@@ -38,17 +38,17 @@ router.post('/array', upload.array('files'), (req, res) => {
     try {
         const fileObjs = req.files
         console.log("fileObjs: ", fileObjs)
-        let filenames = fs.readdirSync('./temp')
+        let filenames = fs.readdirSync('./server/api/temp')
         for (let filename of filenames) {
-            fs.unlinkSync('./temp/' + filename)
+            fs.unlinkSync('./server/api/temp/' + filename)
             console.log('deleted ', filename)
         }
         tempFilesFromArrayObjs(fileObjs)
 
-        execSync('python3 Lexical-Diversity-master/cleaner_bulk.py', {cwd: null})
-        execSync('python3 Lexical-Diversity-master/splitter_bulk.py')
+        execSync('python3 ./server/api/Lexical-Diversity-master/cleaner_bulk.py', {cwd: null})
+        execSync('python3 ./server/api/Lexical-Diversity-master/splitter_bulk.py')
 
-        let taggedAll = execSync('python3 Lexical-Diversity-master/treetag-batch.py')
+        let taggedAll = execSync('python3 ./server/api/Lexical-Diversity-master/treetag-batch.py')
         let taggedSplit = taggedAll.toString().split('\n~~~~~~~~~SPLIT~HERE~~~~~~~~~~\n')
         let arrayOfBuffers = []
         for (let j = 0; j + 1 < taggedSplit.length; j++){
@@ -59,10 +59,10 @@ router.post('/array', upload.array('files'), (req, res) => {
         }
         for (let i = 0; i < fileObjs.length; i++){
             //this is where if-statement logic for a diff copy of the tagged file for each analysis script will go
-            fs.writeFileSync(`temp/${arrayOfBuffers[i][0]}_MATTR.txt`, arrayOfBuffers[i][1])
+            fs.writeFileSync(`./server/api/temp/${arrayOfBuffers[i][0]}_MATTR.txt`, arrayOfBuffers[i][1])
         }
 
-        let matt50results = execSync('python3 Lexical-Diversity-master/MATTR_bulk.py 5000')
+        let matt50results = execSync('python3 ./server/api/Lexical-Diversity-master/MATTR_bulk.py 5000')
         console.log("results: ", matt50results.toString())
         res.send();
     } catch (error) {

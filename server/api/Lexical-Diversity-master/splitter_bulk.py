@@ -8,7 +8,6 @@ print("in splitter")
 for dirname, dirs, files in os.walk('./server/api/temp'):
     #if target in dirname and 'tagged' not in dirname: 
     for filename in files:
-        print(filename)
         if filename.endswith('.txt.subbed'):
             inputname = "./server/api/temp/" + filename
             inputfile = open(inputname, 'r')
