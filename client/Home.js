@@ -38,26 +38,42 @@ export default class Home extends Component {
     event.preventDefault()
     try {
       var formData = new FormData();
-      let fileslist = []
-      for (let i = 0; i + 1 < Object.keys(this.arrayFilesInput.current.files).length; i++){
-        console.log("file from current.files: ", this.arrayFilesInput.current.files[i])
-        fileslist.push(this.arrayFilesInput.current.files[i])
+      //let fileslist = []
+      for (let i = 0; i < Object.keys(this.arrayFilesInput.current.files).length; i++){
+        //console.log("file from current.files: ", this.arrayFilesInput.current.files[i])
+        //console.log("keys of the input thingy: ", Object.keys(this.arrayFilesInput.current.files))
+        //fileslist.push(this.arrayFilesInput.current.files[i])
+        formData.append('files', this.arrayFilesInput.current.files[i])
       }
-      fileslist = JSON.stringify(fileslist)
-      formData.append('files', fileslist)
-      console.log("formdata so far: ", formData)
-      await axios.post('/api/process/array', formData, {
+      //fileslist = JSON.stringify(fileslist)
+      //formData.append('files', fileslist)
+      //console.log("formdata so far: ", formData)
+      const result = await axios.post('/api/process/array', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
+      //console.log(result.data)
+      this.setState({results: result.data, resultsHeading: 'File\tTokens\tTypes\tAverage types per 50 words', loading: ''})
     } catch (error) {
       console.error(error)
     }
   }
   render () {
     const resultsHeadings = this.state.resultsHeading.split('\t')
-    const results = this.state.results.split('\t')
+    let results;
+    //console.log("results: ", this.state.results)
+    if (Array.isArray(this.state.results)){
+      results = this.state.results
+      results = results.filter(item => item.length > 0)
+      for (let i = 0; i < results.length; i++){
+        results[i] = results[i].split('\t')
+      }
+    }
+    else {
+      results = [this.state.results.split('\t')]
+    }
+    //console.log(results)
     return (
       <div id="home">
         <div id="fileInput">
@@ -83,12 +99,14 @@ export default class Home extends Component {
                   <th>{resultsHeadings[2]}</th>
                   <th>{resultsHeadings[3]}</th>
                 </tr>
-                <tr>
-                  <td>{results[0]}</td>
-                  <td>{results[1]}</td>
-                  <td>{results[2]}</td>
-                  <td>{results[3]}</td>
-                </tr>
+                {results.map(resultline => (
+                  <tr key={resultline}>
+                    <td>{resultline[0]}</td>
+                    <td>{resultline[1]}</td>
+                    <td>{resultline[2]}</td>
+                    <td>{resultline[3]}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
         </div>

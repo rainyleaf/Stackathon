@@ -34,10 +34,11 @@ router.post('/single', upload.single('file'), (req, res) => {
 });
 
 router.post('/array', upload.array('files'), (req, res) => {
-    console.log("in array post route")
+    //console.log("in array post route")
+    //console.log("req.body: ", req.body)
     try {
         const fileObjs = req.files
-        console.log("fileObjs: ", fileObjs)
+        //console.log("fileObjs: ", fileObjs)
         let filenames = fs.readdirSync('./server/api/temp')
         for (let filename of filenames) {
             fs.unlinkSync('./server/api/temp/' + filename)
@@ -63,8 +64,8 @@ router.post('/array', upload.array('files'), (req, res) => {
         }
 
         let matt50results = execSync('python3 ./server/api/Lexical-Diversity-master/MATTR_bulk.py 5000')
-        console.log("results: ", matt50results.toString())
-        res.send();
+        console.log("results: ", matt50results.toString().split('\n'))
+        res.json(matt50results.toString().split('\n'));
     } catch (error) {
         console.error(error)
     }
