@@ -1,0 +1,88 @@
+/* tags */
+* {
+    box-sizing: border-box;
+  }
+  
+  a {
+    text-decoration: none;
+    color: #444;
+    transition: color 0.5s ease;
+  }
+  
+  a:hover {
+    color: #888;
+  }
+  
+  body {
+    font-family: 'Open Sans', arial,sans-serif;
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(45deg, #eee, #fff);
+    background-attachment: fixed;
+    letter-spacing: 0.03em;
+  }
+  
+  p {
+    font-size: 14px;
+    margin: 0;
+    color: #aaa;
+  }
+  
+  h3 {
+    margin: 0.5em 0;
+  }
+  
+  button {
+    padding: 1em 2em;
+    border: none;
+    font-size: 1em;
+    transition: all 1s ease;
+    outline: none;
+    letter-spacing: 0.1em;
+  }
+  
+  #app {
+    height: 100%;
+    width: 100%;
+  }
+  
+  #main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #main > div {
+    width: 50%;
+  }
+  
+  /* form */
+  form button {
+    color: white;
+    background-color: #59A9E9;
+  }
+  
+  form button:hover {
+    background-color: #59A9C2;
+  }
+  
+  /* utility/layout */
+  
+  .error {
+    padding: 1em 2em;
+    font-size: 1em;
+    letter-spacing: 0.1em;
+    background-color: red;
+    color: white;
+    margin-top: 1em;
+  }
+  
+  .warning {
+    padding: 0 0.5em;
+    font-size: 1em;
+    letter-spacing: 0.1em;
+    background-color: orange;
+    color: white;
+    margin-left: 1em;
+  }
