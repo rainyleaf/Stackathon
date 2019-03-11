@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
-import json from 'circular-json'
 
 export default class Home extends Component {
   constructor (props) {
@@ -9,7 +8,8 @@ export default class Home extends Component {
     this.state = {
       results: '',
       loading: '',
-      resultsHeading: ''
+      resultsHeading: '',
+      chunkSize: 50
     }
     this.handleSubmitSingle = this.handleSubmitSingle.bind(this)
     this.handleSubmitArray = this.handleSubmitArray.bind(this)
@@ -20,7 +20,6 @@ export default class Home extends Component {
     event.preventDefault()
     this.setState({loading: 'Your data is loading! This should take between 10 and 30 seconds depending on the size of your input.'})
     try {
-      //console.log("SINGLEFILEINPUT: ", json.stringify(this.singleFileInput))
       var formData = new FormData();
       formData.append('file', this.singleFileInput.current.files[0]);
       const result = await axios.post('/api/process/single', formData, {
@@ -28,7 +27,6 @@ export default class Home extends Component {
           'Content-Type': 'multipart/form-data'
         }
       })
-      console.log(result.data)
       this.setState({results: result.data, resultsHeading: 'File\tTokens\tTypes\tAverage types per 50 words', loading: ''})
     } catch (error) {
       console.error(error)
@@ -36,24 +34,17 @@ export default class Home extends Component {
   }
   async handleSubmitArray(event){
     event.preventDefault()
+    this.setState({loading: 'Your data is loading! This should take between 10 and 30 seconds depending on the size of your input.'})
     try {
       var formData = new FormData();
-      //let fileslist = []
       for (let i = 0; i < Object.keys(this.arrayFilesInput.current.files).length; i++){
-        //console.log("file from current.files: ", this.arrayFilesInput.current.files[i])
-        //console.log("keys of the input thingy: ", Object.keys(this.arrayFilesInput.current.files))
-        //fileslist.push(this.arrayFilesInput.current.files[i])
         formData.append('files', this.arrayFilesInput.current.files[i])
       }
-      //fileslist = JSON.stringify(fileslist)
-      //formData.append('files', fileslist)
-      //console.log("formdata so far: ", formData)
       const result = await axios.post('/api/process/array', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
-      //console.log(result.data)
       this.setState({results: result.data, resultsHeading: 'File\tTokens\tTypes\tAverage types per 50 words', loading: ''})
     } catch (error) {
       console.error(error)
@@ -62,7 +53,6 @@ export default class Home extends Component {
   render () {
     const resultsHeadings = this.state.resultsHeading.split('\t')
     let results;
-    //console.log("results: ", this.state.results)
     if (Array.isArray(this.state.results)){
       results = this.state.results
       results = results.filter(item => item.length > 0)
@@ -73,7 +63,6 @@ export default class Home extends Component {
     else {
       results = [this.state.results.split('\t')]
     }
-    //console.log(results)
     return (
       <div id="home">
         <div id="fileInput">
