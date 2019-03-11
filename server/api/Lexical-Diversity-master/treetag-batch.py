@@ -2,7 +2,7 @@ import os
 import subprocess
 #target = '-Processing'
 
-for dirname, dirs, files in os.walk('./temp'):
+for dirname, dirs, files in os.walk('./server/api/temp'):
     #if target in dirname and 'tagged' not in dirname: 
         #if 'tagged' not in dirs:
         #    os.makedirs(os.path.join(dirname, 'tagged'))   # If tagged doesn't exist, make it

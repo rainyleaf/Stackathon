@@ -21,9 +21,9 @@ types = 0
 tokens = 0
 total_types = 0
 
-pathstump = "./temp/"
+pathstump = "./server/api/temp/"
 
-for dirname, dirs, files in os.walk('./temp'):
+for dirname, dirs, files in os.walk('./server/api/temp'):
     #if target in dirname:
         #author = re.findall("..(.*?)\\\\tagged", dirname)[0]
         #author = dirname.split(os.sep)[1]
@@ -46,24 +46,25 @@ for dirname, dirs, files in os.walk('./temp'):
                 for line in data:
                     line = line.rstrip('\n')
                     line = line.split('\t')
-                    lemma = line[2]
-                    tokens += 1
-                    l.append(lemma)				#add lemma to list
-                    if lemma in d:
-                        d[lemma] += 1			#add lemma to dictionary or increase value
-                    else:
-                        d[lemma] = 1
-                    if lemma in t:
-                        t[lemma] += 1			#add lemma to dictionary or increase value
-                    else:
-                        t[lemma] = 1
-                        total_types += 1
-                    if tokens >= int(window_size):
-                        if tokens > int(window_size):			#not in first 50 words for book
-                            chop_word = l[tokens - (int(window_size) + 1)] #chop_word becomes furthest left word in moving window
-                            d[chop_word] -= 1			#find that word in d, decrease its value by 1
-                            if d[chop_word] == 0:		#if that value reaches 0, delete word
-                                del d[chop_word]		#dictionary token sum stays at 50 since it is all the values added up, basically
-                        types = len(d)					#types is number of keys in dictionary
-                        types_50_sums += types			#every set of 50, adds the number of keys to an accumulating total/sum
+                    if len(line) == 3:
+                        lemma = line[2]
+                        tokens += 1
+                        l.append(lemma)				#add lemma to list
+                        if lemma in d:
+                            d[lemma] += 1			#add lemma to dictionary or increase value
+                        else:
+                            d[lemma] = 1
+                        if lemma in t:
+                            t[lemma] += 1			#add lemma to dictionary or increase value
+                        else:
+                            t[lemma] = 1
+                            total_types += 1
+                        if tokens >= int(window_size):
+                            if tokens > int(window_size):			#not in first 50 words for book
+                                chop_word = l[tokens - (int(window_size) + 1)] #chop_word becomes furthest left word in moving window
+                                d[chop_word] -= 1			#find that word in d, decrease its value by 1
+                                if d[chop_word] == 0:		#if that value reaches 0, delete word
+                                    del d[chop_word]		#dictionary token sum stays at 50 since it is all the values added up, basically
+                            types = len(d)					#types is number of keys in dictionary
+                            types_50_sums += types			#every set of 50, adds the number of keys to an accumulating total/sum
                 calculate_mattr50()

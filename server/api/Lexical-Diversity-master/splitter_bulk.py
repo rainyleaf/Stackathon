@@ -5,12 +5,12 @@ import os
 #target_names = ['-to-process.txt.subbed', '_to_process.txt.subbed', '_to-process.txt.subbed', '-to_process.txt.subbed', '-tp.txt.subbed', '_tp.txt.subbed']
 #target = "-Processing"
 print("in splitter")
-for dirname, dirs, files in os.walk('./temp'):
+for dirname, dirs, files in os.walk('./server/api/temp'):
     #if target in dirname and 'tagged' not in dirname: 
     for filename in files:
         print(filename)
         if filename.endswith('.txt.subbed'):
-            inputname = "temp/" + filename
+            inputname = "./server/api/temp/" + filename
             inputfile = open(inputname, 'r')
             # for ending in target_names:
             #if filename.endswith('.subbed'):
@@ -19,7 +19,7 @@ for dirname, dirs, files in os.walk('./temp'):
             new_filename = new_filename.replace(',', '')
             new_filename = new_filename.replace('!', '')
             #print(dirname + new_filename)
-            new_filename= "temp/" + new_filename
+            new_filename= "./server/api/temp/" + new_filename
 
             new_file = open(new_filename, 'w')              
             for line in inputfile:
