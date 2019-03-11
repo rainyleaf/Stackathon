@@ -33,12 +33,13 @@ for dirname, dirs, files in os.walk('./temp'):
         for filename in files:
             d = {}
             l = []
+            t = {}
             types_50_sums = float(0)
             types = 0
             total_types = 0
             tokens = 0
-            if '_tagged.txt' in filename: 
-                text = filename.replace('_tagged.txt', '')
+            if '_MATTR.txt' in filename: 
+                text = filename.replace('_MATTR.txt', '')
                 data = open(pathstump + filename, 'r')
                 #print("passed the _tagged.txt check in MATTR: ")
                 print(filename)

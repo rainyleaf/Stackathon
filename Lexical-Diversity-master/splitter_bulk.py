@@ -31,4 +31,4 @@ for dirname, dirs, files in os.walk('./temp'):
                     #word = lemmatizer.lemmatize(word)
                     print(word, file=new_file)
 
-        inputfile.close()
+            inputfile.close()
