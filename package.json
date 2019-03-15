@@ -4,19 +4,35 @@
   "description": "online platform for processing text files and calculating lexical diversity measures thereof",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "npm run start-server & npm run build-watch",
+    "start-server": "nodemon --watch server -e js,html server/index.js",
+    "build-watch": "webpack -w"
   },
   "keywords": [],
   "author": "Torri Raines",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.17.1",
     "child_process": "^1.0.2",
+    "circular-json": "^0.5.9",
     "empty-folder": "^2.0.3",
-    "en-stemmer": "^1.0.3",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
-    "lemmatizer": "0.0.1",
     "multer": "^1.4.1",
-    "util.promisify": "^1.0.0"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
+    "util.promisify": "^1.0.0",
+    "volleyball": "^1.5.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "nodemon": "^1.14.11",
+    "webpack": "^3.10.0"
   }
 }

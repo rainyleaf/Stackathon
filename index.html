@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test</title>
+    </head>
+    <body>
+        <form action="/single" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".txt" multiple=false>
+            <button>Upload</button>
+        </form>
+        <p></p>
+        <form action="/array" method="post" enctype="multipart/form-data">
+            <input type="file" name="files" accept=".txt" multiple=true>
+            <button>Upload multiple</button>
+        </form>
+        <p></p>
+        <div>
+            This is where the output will go when the process is done running.
+        </div>
+    </body>
+    <script src="../index2.js"></script>
+</html>
